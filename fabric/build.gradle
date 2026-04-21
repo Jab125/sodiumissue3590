@@ -1,0 +1,49 @@
+apply plugin: "net.fabricmc.fabric-loom"
+
+loom {
+    runs {
+        named("client") {
+            client()
+            configName = "fabric - Client"
+            appendProjectPathToConfigName = false
+            ideConfigGenerated(true)
+        }
+    }
+    mods {
+        // define mod <-> source bindings
+        // these are used to tell the game which sources are for which mod
+        // multi mod projects should define one per mod
+        sodiumissue3590 {
+            sourceSet(sourceSets.main)
+            sourceSet(project(":common").sourceSets.main)
+        }
+    }
+}
+
+dependencies {
+    // To change the versions see the gradle.properties file
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    implementation fabricApi.module("fabric-rendering-v1", "0.146.1+26.1.2")
+    implementation fabricApi.module("fabric-registry-sync-v0", "0.146.1+26.1.2")
+    implementation fabricApi.module("fabric-resource-loader-v1", "0.146.1+26.1.2")
+    implementation fabricApi.module("fabric-creative-tab-api-v1", "0.146.1+26.1.2")
+    implementation project(":common"), {
+        transitive false
+    }
+}
+
+classes.dependsOn(project(":common").classes)
+
+processResources {
+    inputs.property "version", project.version
+    inputs.property "minecraft_version", project.minecraft_version
+    inputs.property "loader_version", project.loader_version
+    filteringCharset "UTF-8"
+
+    filesMatching(["fabric.mod.json", "META-INF/neoforge.mods.toml"]) {
+        expand "version": project.version,
+                "minecraft_version": project.minecraft_version,
+                "loader_version": project.loader_version
+    }
+}
