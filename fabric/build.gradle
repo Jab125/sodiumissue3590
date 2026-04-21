@@ -24,10 +24,10 @@ dependencies {
     // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     implementation "net.fabricmc:fabric-loader:${project.loader_version}"
-    implementation fabricApi.module("fabric-rendering-v1", "0.146.1+26.1.2")
-    implementation fabricApi.module("fabric-registry-sync-v0", "0.146.1+26.1.2")
-    implementation fabricApi.module("fabric-resource-loader-v1", "0.146.1+26.1.2")
-    implementation fabricApi.module("fabric-creative-tab-api-v1", "0.146.1+26.1.2")
+    implementation include(fabricApi.module("fabric-rendering-v1", "0.146.1+26.1.2"))
+    implementation include(fabricApi.module("fabric-registry-sync-v0", "0.146.1+26.1.2"))
+    implementation include(fabricApi.module("fabric-resource-loader-v1", "0.146.1+26.1.2"))
+    implementation include(fabricApi.module("fabric-creative-tab-api-v1", "0.146.1+26.1.2"))
     implementation project(":common"), {
         transitive false
     }
